@@ -3,28 +3,31 @@ body{
 }
 
 header{
-    font-size: 50px;
+    font-size: 35px;
     text-align: center;
 }
 
 h2{
-    font-size: 60px;
+    font-size: 30px;
+    text-align: center;
+
 }
 
 
-.currentTimeClock{
-    width: 75%;
+.clockContainer{
+    width: 25%;
     height: 100%;
-    margin: 0 12%;
+    margin: 0 auto;
     padding: 1%;
-    border: 1px solid #aaa ;
+    border: 1px solid #000 ;
     border-radius: 8px;
     background-color: #aaa;
 }
 
 .currentTimeText, .currentDateText{
-    height: 70px;
-    font-size: 50px;
+    height: 40px;
+    font-size: 30px;
+    text-align: center;
 
     background-color: #fff;
     color: black;
@@ -55,6 +58,26 @@ h2{
   
   @media only screen and (min-width: 700px) {
     /* For desktop: */
+    
+    header{
+    font-size: 50px;
+    }
+
+    h2{
+      font-size: 40px;
+    }
+
+    .currentTimeText, .currentDateText{
+      height: 70px;
+      font-size: 50px;
+    }
+
+    .clockContainer{
+      width: 33%;
+    }
+
+
+
     .col-m-1 {width: 8.33%;}
     .col-m-2 {width: 16.66%;}
     .col-m-3 {width: 24%;}
