@@ -1,7 +1,6 @@
 let currentTimeText = document.querySelector(".currentTimeText");
 let currentDateText = document.querySelector(".currentDateText");
-
-console.log(currentTimeText.innerText); // debug
+let eventCountdownText = document.querySelector(".eventCountdownText");
 
 setCurrentDateTime(); // writes time on loading the page
 
@@ -19,4 +18,18 @@ function setCurrentDateTime()
     
     currentTimeText.innerText = currentTime;
     currentDateText.innerText = fullDate;
+}
+
+function setEventCountdownText()
+{
+    currentDate = new Date();
+    let currentDay = currentDate.getDate();
+    let currentMonth = currentDate.getMonth() + 1;
+    let currentYear = currentDate.getFullYear();
+    let fullDate = currentDay + "/" + currentMonth + "/" + currentYear;
+    let currentTime = currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+
+    // Get the future date from HTML
+    // calculate future date minus current date and display the time remaining
+    // set HTML attribute to equal the time remaining
 }
