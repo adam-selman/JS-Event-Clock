@@ -46,9 +46,10 @@ function setEventCountdownText(e)
     let userDate = e.target.value;
     console.log(userDate);
 
-    // calculate the number of days, months and years etc
-    countdownToDate = calcTimeUntilDate(userDate);
+    // calculate the number of days, months and years unti la date
+    countdownToDate = calcDaysUntilDate(userDate);
     // set HTML attribute to equal the time remaining
+    eventCountdownText.innerText = countdownToDate;
 }
 
 function parseForDisplay(string) // will add necessary formatting to strings to look better
@@ -62,7 +63,7 @@ function parseForDisplay(string) // will add necessary formatting to strings to 
     return string;
 }
 
-function calcTimeUntilDate(eventDate)
+function calcDaysUntilDate(eventDate)
 {
     console.log(eventDate);
     let monthValues = {
@@ -95,22 +96,69 @@ function calcTimeUntilDate(eventDate)
     let currentDaySum = currentDay + (currentMonth * currentMonthDays) + (currentYear * 365); // used to count the total amount of time in days
     
     let eventDaySum = eventDay + (eventMonth * eventMonthDays) + (eventYear * 365);
-    result = eventDaySum - currentDaySum; // find out how many days are left to go
+    totalDays = eventDaySum - currentDaySum; // find out how many days are left to go
 
 
-    countdownYear = Math.floor(result / 365); // number of years is the floor div of the num of days
+    countdownYear = Math.floor(totalDays / 365); // number of years is the floor div of the num of days
     console.log(`countdownYear: ${countdownYear}`); // debug
 
-    result = result % 365; // getting the remainder for the months
-    console.log(result);
+    totalDays = totalDays % 365; // getting the remainder for the months
+    console.log(`totalDays post years: ${totalDays}`);
 
 
     // loop through each month after current in the dictionary and subtract it's value until value drops below 0
-    // set month to be the current month
-    // get remainder of days
-    // set number of days to be equal to remainder
+    let monthTracker = currentMonth; // tracking which index of the month we're on
+    let monthCounter = 0; // counting how many months have been cycled through
+    let totalDaysCopy = totalDays; // creating a copy
+
+    let countdownDay = 0
+
+    if (totalDays >= currentMonthDays) // if less than a month then month = 0
+    {
+        
+        console.log("totalDays > currentMonthDays"); // debug
+        while (totalDays > 0)
+            {
+            totalDaysCopy = totalDays;
+            totalDays = totalDays - monthValues[monthTracker];
+
+            console.log(`totalDaysCopy:${totalDaysCopy}`); // debug
+            console.log(`totalDays:${totalDays}`); // debug
+            console.log(`monthTracker:${monthTracker}`); // debug
+
+
+            monthTracker++;
+
+            if (monthTracker > 12) // resets back to january after december
+            {
+                monthTracker = 1;
+            }
+
+            monthCounter++;
+            } 
+        
+        let countdownDay = totalDaysCopy + monthValues[monthTracker];
+        totalDays = totalDaysCopy; // 
+    }
+
+    else
+    {
+        console.log("totalDays < currentMonthDays"); // debug
+        countdownDay = totalDaysCopy;
+    }
+    
+
+
+    // set month to be the number of months counted
+    let countdownMonth = monthCounter;
+
+    // get remainder of days and set number of days to be equal to remainder
+
 
     // return fully constructed date
+    let fullCountdown = countdownYear + " years, " + countdownMonth + " months, " 
+    + countdownDay  + " days" ;
 
 
+    return fullCountdown;
 }
