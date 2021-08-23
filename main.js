@@ -94,16 +94,22 @@ function calcDaysUntilDate(eventDate)
     eventMonthDays = monthValues[eventMonth];
 
     let currentDaySum = currentDay + (currentMonth * currentMonthDays) + (currentYear * 365); // used to count the total amount of time in days
-    
+    console.log(`currentDaySum initiated: ${currentDaySum}`); // debug
+
+
     let eventDaySum = eventDay + (eventMonth * eventMonthDays) + (eventYear * 365);
+    console.log(`eventDaySum initiated: ${eventDaySum}`); // debug
+
     totalDays = eventDaySum - currentDaySum; // find out how many days are left to go
+    console.log(`totalDays initiated: ${totalDays}`); // debug
 
 
     countdownYear = Math.floor(totalDays / 365); // number of years is the floor div of the num of days
-    console.log(`countdownYear: ${countdownYear}`); // debug
+    console.log(`countdownYear: ${countdownYear}`); // debug // debug
 
+    console.log(`totalDays pre years: ${totalDays}`); // debug
     totalDays = totalDays % 365; // getting the remainder for the months
-    console.log(`totalDays post years: ${totalDays}`);
+    console.log(`totalDays post years: ${totalDays}`); // debug
 
 
     // loop through each month after current in the dictionary and subtract it's value until value drops below 0
@@ -113,18 +119,18 @@ function calcDaysUntilDate(eventDate)
 
     let countdownDay = 0
 
-    if (totalDays >= currentMonthDays) // if less than a month then month = 0
+    if (totalDays >= 31)
     {
         
-        console.log("totalDays > currentMonthDays"); // debug
+        console.log("totalDays > 31"); // debug
         while (totalDays > 0)
             {
             totalDaysCopy = totalDays;
             totalDays = totalDays - monthValues[monthTracker];
 
-            console.log(`totalDaysCopy:${totalDaysCopy}`); // debug
-            console.log(`totalDays:${totalDays}`); // debug
-            console.log(`monthTracker:${monthTracker}`); // debug
+            console.log(`totalDaysCopy:${totalDaysCopy}`); // debug // debug
+            console.log(`totalDays:${totalDays}`); // debug // debug
+            console.log(`monthTracker:${monthTracker}`); // debug // debug
 
 
             monthTracker++;
@@ -141,11 +147,13 @@ function calcDaysUntilDate(eventDate)
         totalDays = totalDaysCopy; // 
     }
 
-    else
+    else // if less than a month then month = 0
     {
-        console.log("totalDays < currentMonthDays"); // debug
-        countdownDay = totalDaysCopy;
+        console.log("totalDays < currentMonthDays - currentDay"); // debug
+        countdownDay = totalDays;
     }
+
+    totalDaysCopy = 0;
     
 
 
