@@ -1,3 +1,22 @@
+
+function debugVariable(name, value)
+{
+    console.log("------------------------------------------");
+    console.log("DEBUG");
+    console.trace(); // shows line numbers and function calls
+    console.log(`Variable Name: ${name}`);
+
+    let type = typeof(value);
+    console.log(`Variable Type: ${type}`);
+
+    console.log(`Variable Value: ${value}`);
+
+}
+
+
+// -------------------------------------------------------------------------
+
+
 let currentTimeText = document.querySelector(".currentTimeText");
 let currentDateText = document.querySelector(".currentDateText");
 let eventCountdownText = document.querySelector(".eventCountdownText");
@@ -66,7 +85,7 @@ function parseForDisplay(string) // will add necessary formatting to strings to 
 function calcDaysUntilDate(eventDate)
 {
     console.log(eventDate);
-    let monthValues = {
+    let monthValues = { // obj with number of days in each month by index
         1:31,
         2:28,
         3:31,
@@ -81,31 +100,54 @@ function calcDaysUntilDate(eventDate)
         12:31
     }
 
+
+
     currentDate = new Date();
     let currentDay = parseInt(currentDate.getDate());
+    debugVariable("currentDay", currentDay);  // debug
+
     let currentMonth = parseInt(currentDate.getMonth() + 1);
+    debugVariable("currentMonth", currentMonth);  // debug
+    
     let currentMonthDays = monthValues[currentMonth];
+    
     let currentYear = parseInt(currentDate.getFullYear());
+    debugVariable("currentYear", currentYear);  // debug
+
+    console.log(`currentDate: ${currentYear}-${currentMonth}-${currentDay}`); // debug
+
+
 
 
     eventYear = parseInt(eventDate.slice(0,4)); // parse the input into numbers
+    debugVariable("eventYear", eventYear);  // debug
+
+
     eventMonth = parseInt(eventDate.slice(5,7));
+    debugVariable("eventMonth", eventMonth);  // debug
+    
     eventDay = parseInt(eventDate.slice(8));
+    debugVariable("eventDay", eventDay);  // debug
+
     eventMonthDays = monthValues[eventMonth];
 
+
+
     let currentDaySum = currentDay + (currentMonth * currentMonthDays) + (currentYear * 365); // used to count the total amount of time in days
-    console.log(`currentDaySum initiated: ${currentDaySum}`); // debug
+    debugVariable("currentDaySum", currentDaySum);  // debug
 
 
     let eventDaySum = eventDay + (eventMonth * eventMonthDays) + (eventYear * 365);
-    console.log(`eventDaySum initiated: ${eventDaySum}`); // debug
+    debugVariable("eventDaySum", eventDaySum);  // debug
 
     totalDays = eventDaySum - currentDaySum; // find out how many days are left to go
-    console.log(`totalDays initiated: ${totalDays}`); // debug
+    debugVariable("totalDays", totalDays);  // debug
+
+
 
 
     countdownYear = Math.floor(totalDays / 365); // number of years is the floor div of the num of days
-    console.log(`countdownYear: ${countdownYear}`); // debug // debug
+    debugVariable("countdownYear", countdownYear);  // debug
 
     console.log(`totalDays pre years: ${totalDays}`); // debug
     totalDays = totalDays % 365; // getting the remainder for the months
@@ -128,9 +170,9 @@ function calcDaysUntilDate(eventDate)
             totalDaysCopy = totalDays;
             totalDays = totalDays - monthValues[monthTracker];
 
-            console.log(`totalDaysCopy:${totalDaysCopy}`); // debug // debug
-            console.log(`totalDays:${totalDays}`); // debug // debug
-            console.log(`monthTracker:${monthTracker}`); // debug // debug
+            debugVariable("totalDaysCopy", totalDaysCopy);  // debug
+            debugVariable("totalDays", totalDays);  // debug
+            debugVariable("monthTracker", monthTracker);  // debug
 
 
             monthTracker++;
