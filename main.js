@@ -82,6 +82,48 @@ function parseForDisplay(string) // will add necessary formatting to strings to 
     return string;
 }
 
+function calcTotalDays(date) // date in form ("yyyy-mm-dd")
+{
+    let monthValues = { // obj with number of days in each month by index
+        1:31,
+        2:28,
+        3:31,
+        4:30,
+        5:31,
+        6:30,
+        7:31,
+        8:31,
+        9:30,
+        10:31,
+        11:30,
+        12:31
+    }
+
+
+    year = parseInt(date.slice(0,4)); // parse the input into numbers
+    console.log(year);
+
+    month = parseInt(date.slice(5,7));
+    console.log(month);
+
+    day = parseInt(date.slice(8));
+    console.log(day);
+    let totalNumberOfDays = 0;
+
+    totalNumberOfDays += year * 365;
+
+    totalNumberOfDays += day;
+    month--;
+    
+    for (monthIndex = month; month > 0; month--)
+    {
+        totalNumberOfDays += monthValues[monthIndex];
+    }
+    
+    return totalNumberOfDays;
+
+}
+
 function calcDaysUntilDate(eventDate)
 {
     console.log(eventDate);
@@ -104,50 +146,36 @@ function calcDaysUntilDate(eventDate)
 
     currentDate = new Date();
     let currentDay = parseInt(currentDate.getDate());
-    debugVariable("currentDay", currentDay);  // debug
+    // debugVariable("currentDay", currentDay);  // debug
 
     let currentMonth = parseInt(currentDate.getMonth() + 1);
-    debugVariable("currentMonth", currentMonth);  // debug
+    // debugVariable("currentMonth", currentMonth);  // debug
     
     let currentMonthDays = monthValues[currentMonth];
     
     let currentYear = parseInt(currentDate.getFullYear());
-    debugVariable("currentYear", currentYear);  // debug
+    // debugVariable("currentYear", currentYear);  // debug
+
+    currentDate = currentYear + "-" + parseForDisplay(currentMonth) + "-" + parseForDisplay(currentDay);
 
     console.log(`currentDate: ${currentYear}-${currentMonth}-${currentDay}`); // debug
 
 
 
+    let currentDaySum = calcTotalDays(currentDate);
+    debugVariable("currentDaySum", currentDaySum);
 
-    eventYear = parseInt(eventDate.slice(0,4)); // parse the input into numbers
-    debugVariable("eventYear", eventYear);  // debug
-
-
-    eventMonth = parseInt(eventDate.slice(5,7));
-    debugVariable("eventMonth", eventMonth);  // debug
-    
-    eventDay = parseInt(eventDate.slice(8));
-    debugVariable("eventDay", eventDay);  // debug
-
-    eventMonthDays = monthValues[eventMonth];
-
-
-
-    let currentDaySum = currentDay + (currentMonth * currentMonthDays) + (currentYear * 365); // used to count the total amount of time in days
-    debugVariable("currentDaySum", currentDaySum);  // debug
-
-
-    let eventDaySum = eventDay + (eventMonth * eventMonthDays) + (eventYear * 365);
+    let eventDaySum = calcTotalDays(eventDate);
     debugVariable("eventDaySum", eventDaySum);  // debug
 
     totalDays = eventDaySum - currentDaySum; // find out how many days are left to go
-    debugVariable("totalDays", totalDays);  // debug
+    // debugVariable("totalDays", totalDays);  // debug
 
 
 
 
     countdownYear = Math.floor(totalDays / 365); // number of years is the floor div of the num of days
-    debugVariable("countdownYear", countdownYear);  // debug
+    // debugVariable("countdownYear", countdownYear);  // debug
 
     console.log(`totalDays pre years: ${totalDays}`); // debug
     totalDays = totalDays % 365; // getting the remainder for the months
@@ -161,7 +189,7 @@ function calcDaysUntilDate(eventDate)
 
     let countdownDay = 0
 
-    if (totalDays >= 31)
+    if (totalDays > 31)
     {
         
         console.log("totalDays > 31"); // debug
@@ -170,9 +198,9 @@ function calcDaysUntilDate(eventDate)
             totalDaysCopy = totalDays;
             totalDays = totalDays - monthValues[monthTracker];
 
-            debugVariable("totalDaysCopy", totalDaysCopy);  // debug
-            debugVariable("totalDays", totalDays);  // debug
-            debugVariable("monthTracker", monthTracker);  // debug
+            // debugVariable("totalDaysCopy", totalDaysCopy);  // debug
+            // debugVariable("totalDays", totalDays);  // debug
+            // debugVariable("monthTracker", monthTracker);  // debug
 
 
             monthTracker++;
